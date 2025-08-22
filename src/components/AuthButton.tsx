@@ -4,13 +4,15 @@ import { useSession, signIn, signOut } from "next-auth/react";
 import { useRouter } from "next/navigation";
 
 export default function AuthButton() {
-  const { data: session } = useSession();
+  const { data: session, status } = useSession();
   const router = useRouter();
+
+  // 🔹 Mostra nada enquanto o status está carregando
+  if (status === "loading") return null;
 
   if (session) {
     return (
       <div className="flex gap-2">
-        {/* Botão que leva para o dashboard */}
         <button
           onClick={() => router.push("/dashboard/content")}
           className="px-4 py-2 bg-blue-600 hover:bg-blue-700 rounded text-white"
@@ -21,7 +23,7 @@ export default function AuthButton() {
           onClick={() => signOut({ callbackUrl: "/" })}
           className="px-4 py-2 bg-red-600 hover:bg-red-700 rounded text-white"
         >
-          Logout
+          Sair
         </button>
       </div>
     );
@@ -29,7 +31,7 @@ export default function AuthButton() {
 
   return (
     <button
-      onClick={() => signIn("email", { callbackUrl: "/dashboard/content" })}
+      onClick={() => router.push("/auth/signin")}
       className="px-4 py-2 bg-green-600 hover:bg-green-700 rounded text-white"
     >
       Login

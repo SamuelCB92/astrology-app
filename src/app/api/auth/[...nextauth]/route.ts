@@ -5,7 +5,7 @@ import { PrismaClient } from "@prisma/client";
 
 const prisma = new PrismaClient();
 
-export const authOptions = {
+const authOptions = {
   adapter: PrismaAdapter(prisma),
   providers: [
     EmailProvider({
@@ -20,14 +20,32 @@ export const authOptions = {
       from: process.env.EMAIL_FROM,
     }),
   ],
+
   secret: process.env.NEXTAUTH_SECRET,
+
+  pages: {
+    signIn: "/auth/signin",
+  },
+
   callbacks: {
-    async redirect({ url, baseUrl }) {
-      // Qualquer login vai automaticamente para o dashboard
-      return baseUrl + "/content/dashboard";
+    async redirect({ url, baseUrl }: { url: string; baseUrl: string }) {
+      // 🔹 Se for logout, redireciona para a página inicial
+      if (url.includes("signout")) {
+        return `${baseUrl}/`;
+      }
+      // 🔹 Se for login, redireciona para o dashboard
+      if (url.includes("signin")) {
+        return `${baseUrl}/dashboard/content`;
+      }
+      // 🔹 Para outros casos, mantém o comportamento padrão
+      return url.startsWith(baseUrl) ? url : `${baseUrl}/dashboard/content`;
     },
   },
+
+  // Add debug mode for development
+  debug: process.env.NODE_ENV === "development",
 };
 
 const handler = NextAuth(authOptions);
+
 export { handler as GET, handler as POST };

@@ -38,8 +38,26 @@ model User {
   email         String?   @unique
   emailVerified DateTime?
   image         String?
+  role          UserRole  @default(FREE)
+  subscriptionStatus SubscriptionStatus @default(INACTIVE)
+  subscriptionStart DateTime?
+  subscriptionEnd   DateTime?
   accounts      Account[]
   sessions      Session[]
+  contents      Content[]
+}
+
+enum UserRole {
+  FREE
+  PREMIUM
+  ADMIN
+}
+
+enum SubscriptionStatus {
+  INACTIVE
+  ACTIVE
+  EXPIRED
+  CANCELLED
 }
 
 model VerificationToken {
@@ -48,3 +66,18 @@ model VerificationToken {
   expires    DateTime
   @@unique([identifier, token])
 }
+
+model Content {
+  id        Int      @id @default(autoincrement())
+  title     String
+  type      String   // "Tarot" | "Astrologia" etc.
+  body      String
+  userEmail String?  // opcional: vincula conteúdo a um usuário
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  
+  // Relacionamento com usuário
+  user      User?    @relation(fields: [userEmail], references: [email])
+}
+
+
