@@ -3,8 +3,8 @@ import "./globals.css";
 import Providers from "./providers";
 
 export const metadata: Metadata = {
-  title: "Tarot & Astrology",
-  description: "Personalized readings",
+  title: "Tarot & Astrologia",
+  description: "Leituras personalizadas de Tarot e Astrologia",
 };
 
 export default function RootLayout({

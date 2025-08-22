@@ -10,8 +10,9 @@ export default function AuthButton() {
   if (session) {
     return (
       <div className="flex gap-2">
+        {/* Botão que leva para o dashboard */}
         <button
-          onClick={() => router.push("/dashboard")}
+          onClick={() => router.push("/dashboard/content")}
           className="px-4 py-2 bg-blue-600 hover:bg-blue-700 rounded text-white"
         >
           Dashboard
@@ -28,7 +29,7 @@ export default function AuthButton() {
 
   return (
     <button
-      onClick={() => signIn("email", { callbackUrl: "/dashboard" })}
+      onClick={() => signIn("email", { callbackUrl: "/dashboard/content" })}
       className="px-4 py-2 bg-green-600 hover:bg-green-700 rounded text-white"
     >
       Login

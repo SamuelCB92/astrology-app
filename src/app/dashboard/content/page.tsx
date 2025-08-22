@@ -15,23 +15,21 @@ export default function DashboardPage() {
     }
   }, [status, router]);
 
-  if (status === "loading") {
-    return <p>Loading...</p>;
-  }
+  if (status === "loading") return <p>Carregando...</p>;
 
   const premiumContent = [
-    "Your personalized Tarot reading: The Sun reversed means reflection.",
-    "Vedic Astrology tip: Today is favorable for meditation and planning.",
-    "Exclusive guidance: Focus on your goals, avoid distractions.",
+    "Sua leitura personalizada de Tarô: O Sol invertido indica reflexão.",
+    "Dica de Astrologia Védica: Hoje é um dia favorável para meditação e planejamento.",
+    "Orientação exclusiva: Foque em seus objetivos e evite distrações.",
   ];
 
   return (
     <main className="flex min-h-screen flex-col items-center justify-center bg-gradient-to-br from-purple-800 via-indigo-900 to-black text-white px-4">
       <h1 className="text-4xl font-bold mb-6">
-        Welcome, {session?.user?.email}!
+        Bem-vindo, {session?.user?.email}!
       </h1>
 
-      <p className="mb-4">Here is your exclusive premium content:</p>
+      <p className="mb-4">Aqui está seu conteúdo exclusivo e premium:</p>
 
       <ul className="list-disc pl-6 mb-6">
         {premiumContent.map((item, index) => (
@@ -41,9 +39,9 @@ export default function DashboardPage() {
 
       <button
         className="px-4 py-2 bg-red-600 rounded hover:bg-red-700"
-        onClick={() => signOut()}
+        onClick={() => signOut({ callbackUrl: "/" })}
       >
-        Sign Out
+        Sair
       </button>
     </main>
   );

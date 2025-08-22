@@ -21,6 +21,12 @@ export const authOptions = {
     }),
   ],
   secret: process.env.NEXTAUTH_SECRET,
+  callbacks: {
+    async redirect({ url, baseUrl }) {
+      // Qualquer login vai automaticamente para o dashboard
+      return baseUrl + "/content/dashboard";
+    },
+  },
 };
 
 const handler = NextAuth(authOptions);
