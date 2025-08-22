@@ -29,16 +29,8 @@ const authOptions = {
 
   callbacks: {
     async redirect({ url, baseUrl }: { url: string; baseUrl: string }) {
-      // 🔹 Se for logout, redireciona para a página inicial
-      if (url.includes("signout")) {
-        return `${baseUrl}/`;
-      }
-      // 🔹 Se for login, redireciona para o dashboard
-      if (url.includes("signin")) {
-        return `${baseUrl}/dashboard/content`;
-      }
-      // 🔹 Para outros casos, mantém o comportamento padrão
-      return url.startsWith(baseUrl) ? url : `${baseUrl}/dashboard/content`;
+      // 🔹 Sempre redireciona para o dashboard após login bem-sucedido
+      return `${baseUrl}/dashboard/content`;
     },
   },
 
