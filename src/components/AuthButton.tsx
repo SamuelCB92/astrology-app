@@ -1,4 +1,5 @@
 "use client";
+import Button from "@components/Button";
 
 import { useSession, signIn, signOut } from "next-auth/react";
 import { useRouter } from "next/navigation";
@@ -13,28 +14,31 @@ export default function AuthButton() {
   if (session) {
     return (
       <div className="flex gap-2">
-        <button
+        <Button
+          variant="secondary"
+          size="medium"
           onClick={() => router.push("/dashboard/content")}
-          className="px-4 py-2 bg-blue-600 hover:bg-blue-700 rounded text-white"
         >
           Dashboard
-        </button>
-        <button
+        </Button>
+        <Button
+          variant="danger"
+          size="medium"
           onClick={() => signOut({ callbackUrl: "/" })}
-          className="px-4 py-2 bg-red-600 hover:bg-red-700 rounded text-white"
         >
           Sair
-        </button>
+        </Button>
       </div>
     );
   }
 
   return (
-    <button
+    <Button
+      variant="primary"
+      size="medium"
       onClick={() => router.push("/auth/signin")}
-      className="px-4 py-2 bg-green-600 hover:bg-green-700 rounded text-white"
     >
       Login
-    </button>
+    </Button>
   );
 }

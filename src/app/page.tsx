@@ -2,9 +2,46 @@
 
 import { useSession, signIn } from "next-auth/react";
 import Navbar from "@components/navbar";
+import Card from "@components/Card";
+
+const cards = [
+  {
+    title: "Tarô",
+    variant: "default",
+    content:
+      "Leituras personalizadas e detalhadas do Tarô para orientação espiritual.",
+    featured: false,
+  },
+  {
+    title: "Astrologia",
+    variant: "highlighted",
+    content: "Análise astrológica védica para autoconhecimento e planejamento.",
+    featured: false,
+  },
+  {
+    title: "Tarô & Astrologia",
+    variant: "dark",
+    content: "Combinação única de ambas as práticas para orientação completa.",
+    featured: true,
+  },
+];
 
 export default function HomePage() {
   const { data: session } = useSession();
+
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const renderCard = (card: any, index: number) => {
+    return (
+      <Card
+        key={index}
+        title={card.title}
+        variant={card.variant}
+        fullWidth={card.featured}
+      >
+        <p>{card.content}</p>
+      </Card>
+    );
+  };
 
   return (
     <>
@@ -26,12 +63,16 @@ export default function HomePage() {
           <h2 className="text-3xl font-semibold mb-6">
             O que você encontrará aqui
           </h2>
-          <ul className="list-disc list-inside space-y-2 text-lg">
-            <li>Leituras de Tarô personalizadas e detalhadas.</li>
-            <li>Dicas diárias de Astrologia Védica.</li>
-            <li>Conteúdos exclusivos para assinantes.</li>
-            <li>Ferramentas de autoconhecimento e planejamento.</li>
-          </ul>
+
+          <div className="space-y-4">
+            {/* Featured card takes full width */}
+            {cards.filter((card) => card.featured).map(renderCard)}
+
+            {/* Regular cards in a grid */}
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-2 md:gap-4">
+              {cards.filter((card) => !card.featured).map(renderCard)}
+            </div>
+          </div>
         </section>
 
         {/* Call-to-Action final apenas para não logados */}

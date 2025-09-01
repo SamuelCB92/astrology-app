@@ -1,4 +1,5 @@
 "use client";
+import Button from "@components/Button";
 
 import { useSession } from "next-auth/react";
 import AuthButton from "@components/AuthButton";
@@ -15,18 +16,20 @@ export default function Navbar() {
         className="text-white text-2xl font-bold cursor-pointer"
         onClick={() => router.push("/")}
       >
-        ✨ Tarô & Astrologia
+        <span className="block md:hidden">✨ Tarô</span>
+        <span className="hidden md:block">✨ Tarô & Astrologia</span>
       </div>
 
       {/* Botões de ação */}
       <div className="flex items-center gap-4">
         {session?.user?.email === "sam.makes.programs@gmail.com" && (
-          <button
+          <Button
+            variant="primary"
+            size="small"
             onClick={() => router.push("/dashboard/manage")}
-            className="px-4 py-2 bg-purple-600 hover:bg-purple-700 rounded text-white text-sm"
           >
             🛠️ Administrar
-          </button>
+          </Button>
         )}
         <AuthButton />
       </div>
